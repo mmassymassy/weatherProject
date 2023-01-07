@@ -1,30 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Noeu
+struct ABRNoeu
 {
     int data;
-    struct Noeu *droite;
-    struct Noeu *gauche;
+    struct ABRNoeu *droite;
+    struct ABRNoeu *gauche;
 };
 
-struct Noeu *vider(struct Noeu *root)
+struct ABRNoeu *abr_vider(struct ABRNoeu *root)
 {
     if (root != NULL)
     {
-        vider(root->droite);
-        vider(root->gauche);
+        abr_vider(root->droite);
+        abr_vider(root->gauche);
         free(root);
     }
 
     return NULL;
 }
 
-struct Noeu *insert(struct Noeu *root, int data)
+struct ABRNoeu *abr_insert(struct ABRNoeu *root, int data)
 {
     if (root == NULL)
     {
-        root = malloc(sizeof(struct Noeu));
+        root = malloc(sizeof(struct ABRNoeu));
         root->data = data;
         root->droite = NULL;
         root->gauche = NULL;
@@ -33,63 +33,92 @@ struct Noeu *insert(struct Noeu *root, int data)
 
     if (root->data > data)
     {
-        root->gauche = insert(root->gauche, data);
+        root->gauche = abr_insert(root->gauche, data);
         return root;
     }
     if (root->data <= data)
     {
-        root->droite = insert(root->droite, data);
+        root->droite = abr_insert(root->droite, data);
         return root;
     }
     return root;
 }
 
-void imprimer(struct Noeu *root)
+void abr_imprimer(struct ABRNoeu *root)
 {
     if (root == NULL)
     {
         return;
     }
 
-    imprimer(root->droite);
+    abr_imprimer(root->droite);
     printf("%d ", root->data);
-    imprimer(root->gauche);
+    abr_imprimer(root->gauche);
 }
 
-void print_to_file_order_dec(struct Noeu *root, FILE *f)
+void abr_print_to_file_order_dec(struct ABRNoeu *root, FILE *f)
 {
     if (root == NULL)
     {
         return;
     }
 
-    print_to_file_order_dec(root->droite, f);
+    abr_print_to_file_order_dec(root->droite, f);
     fprintf(f, "%d", root->data);
     fprintf(f, ";");
-    print_to_file_order_dec(root->gauche, f);
+    abr_print_to_file_order_dec(root->gauche, f);
 }
 
-void countElements(struct Noeu *root, int *counter)
+void abr_countElements(struct ABRNoeu *root, int *counter)
 {
     if (root == NULL)
     {
         return;
     }
 
-    countElements(root->gauche, counter);
+    abr_countElements(root->gauche, counter);
     (*counter)++;
-    countElements(root->droite, counter);
+    abr_countElements(root->droite, counter);
 }
 
-void getTreeAvg(struct Noeu *root, int *sum, int *count)
+void abr_getTreeAvg(struct ABRNoeu *root, int *sum, int *count)
 {
     if (root == NULL)
     {
         return;
     }
 
-    getTreeAvg(root->gauche, sum, count);
+    abr_getTreeAvg(root->gauche, sum, count);
     (*count)++;
     (*sum) = (*sum) + root->data; 
-    getTreeAvg(root->droite, sum, count);
+    abr_getTreeAvg(root->droite, sum, count);
+}
+
+void print_abr_2d_util(struct ABRNoeu *root, int space)
+{
+    int COUNT = 10;
+    // Base case
+    if (root == NULL)
+        return;
+
+    // Increase distance between levels
+    space += COUNT;
+
+    // Process right child first
+    print_abr_2d_util(root->droite, space);
+
+    // Print current node after space
+    // count
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->data);
+    // Process left child
+    print_abr_2d_util(root->gauche, space);
+}
+// Wrapper over print2DUtil()
+void print_abr_2d(struct ABRNoeu *root)
+{
+    // Pass initial space count as 0
+    print_abr_2d_util(root, 0);
 }

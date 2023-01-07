@@ -1,4 +1,4 @@
-#include "bst.h"
+#include "avl.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,7 +7,7 @@ void print_number(int a)
     printf("%d", a);
 }
 
-void abr_write_to_file(struct ABRNoeu *root)
+void avl_write_to_file(struct AVLNoeu *root)
 {
     FILE *fptr;
 
@@ -19,21 +19,21 @@ void abr_write_to_file(struct ABRNoeu *root)
         printf("Error!");
         exit(1);
     }
-    abr_print_to_file_order_dec(root, fptr);
+    avl_print_to_file_order_dec(root, fptr);
     fclose(fptr);
 }
 
-float abr_getAvg(struct ABRNoeu *root)
+float avl_getAvg(struct AVLNoeu *root)
 {
     int sum = 0;
     int count = 0;
 
-    abr_getTreeAvg(root, &sum, &count);
+    avl_getTreeAvg(root, &sum, &count);
     float avg = sum / count;
     return avg;
 }
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     // source file
     FILE *fd;
@@ -46,9 +46,10 @@ void main(int argc, char **argv)
     size_t len_r = 0;
     ssize_t read_r;
 
-    struct ABRNoeu *root = NULL;
+    struct AVLNoeu *root = NULL;
 
-    fd = fopen(argv[1], "r");
+    // fd = fopen(argv[1], "r");
+    fd = fopen("/home/abdou/repos/weatherProject/c_source/bin/test.txt", "r");
 
     if (fd == NULL)
     {
@@ -59,7 +60,9 @@ void main(int argc, char **argv)
     while ((read_d = getline(&line_d, &len_d, fd)) != -1)
     {
         int number = atoi(line_d);
-        root = abr_insert(root, number);
+        printf("insering %d it was like this before \n", number);
+        print_avl_2d(root);
+        root = avl_insert(root, number);
     }
 
     fclose(fd);
@@ -70,17 +73,19 @@ void main(int argc, char **argv)
     // write_to_file(root);
 
     int count = 0;
-    abr_countElements(root, &count);
+    avl_countElements(root, &count);
     printf("count: %d \n", count);
 
-    float avg = abr_getAvg(root);
+    float avg = avl_getAvg(root);
 
-    printf("avg: %f \n", avg);
+    printf("avg: %f \n",avg); 
 
-    abr_write_to_file(root);
+    avl_write_to_file(root);
 
-    print_abr_2d(root);
+    print_avl_2d(root);
 
-    abr_vider(root);
+
+    
+    avl_vider(root);
     exit(EXIT_SUCCESS);
 }

@@ -1,15 +1,21 @@
-#include <stdio.h>
+#ifndef BST_H_ /* Include guard */
+#define BST_H_
 
-struct Noeu
+#include <stdio.h>
+#include <stdlib.h>
+struct ABRNoeu
 {
     int data;
-    struct Noeu *droite;
-    struct Noeu *gauche;
+    struct ABRNoeu *droite;
+    struct ABRNoeu *gauche;
 };
 
-struct Noeu *vider(struct Noeu *);
-struct Noeu *insert(struct Noeu *, int data);
-void imprimer(struct Noeu *);
-void print_to_file_order_dec(struct Noeu *, FILE *);
-void countElements(struct Noeu *, int *);
-void getTreeAvg(struct Noeu *, int *, int *);
+struct ABRNoeu *abr_vider(struct ABRNoeu *);
+struct ABRNoeu *abr_insert(struct ABRNoeu *, int data);
+void abr_imprimer(struct ABRNoeu *);
+void abr_print_to_file_order_dec(struct ABRNoeu *, FILE *);
+void abr_countElements(struct ABRNoeu *, int *);
+void abr_getTreeAvg(struct ABRNoeu *, int *, int *);
+void print_abr_2d_util(struct ABRNoeu *, int);
+void print_abr_2d(struct ABRNoeu *);
+#endif // FOO_H_
