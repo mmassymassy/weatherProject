@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_number(int a)
-{
-    printf("%d", a);
-}
 
 void avl_write_to_file(struct AVLNoeu *root)
 {
@@ -49,7 +45,7 @@ int main(int argc, char **argv)
     struct AVLNoeu *root = NULL;
 
     // fd = fopen(argv[1], "r");
-    fd = fopen("/home/abdou/repos/weatherProject/c_source/bin/test.txt", "r");
+    fd = fopen("/home/abdou/repos/weatherProject/c_source/src/algorithms/AVL/test.txt", "r");
 
     if (fd == NULL)
     {
@@ -60,9 +56,10 @@ int main(int argc, char **argv)
     while ((read_d = getline(&line_d, &len_d, fd)) != -1)
     {
         int number = atoi(line_d);
-        printf("insering %d it was like this before \n", number);
-        print_avl_2d(root);
         root = avl_insert(root, number);
+        printf("------------------------------------");
+        printf("insering %d  \n", number);
+        print_avl_2d(root);
     }
 
     fclose(fd);

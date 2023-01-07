@@ -1,6 +1,5 @@
 #ifndef AVL_H_ /* Include guard */
 #define AVL_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 struct AVLNoeu *avl_vider(struct AVLNoeu *);

@@ -111,21 +111,20 @@ int avl_get_height(struct AVLNoeu *root)
         return 0;
     }
 
-    int height = 0;
+    int left_height = 0;
+    int right_height = 0;
 
     if (root->droite != NULL)
     {
-        height = root->droite->height;
+        right_height = root->droite->height;
     }
 
     if (root->gauche != NULL)
     {
-        if (height < root->gauche->height)
-        {
-            height = root->gauche->height;
-        }
+        left_height = root->gauche->height;
     }
 
+    int height = ( left_height > right_height) ? left_height : right_height;
 
     return height + 1;
 }
