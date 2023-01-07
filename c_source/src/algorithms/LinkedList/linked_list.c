@@ -20,10 +20,18 @@ struct ListNode *add_sorted_asc(struct ListNode *root, int data)
         return root;
     }
 
+    if(root->data >= data){
+        struct ListNode* newNode = malloc(sizeof(struct ListNode));
+        newNode->data = data;
+        newNode->next = root ;
+        newNode->prev = NULL ;
+        root->prev = newNode;
+        return newNode;
+    }
     struct ListNode *cuurent = root;
 
-    while(cuurent != NULL){
-        if(cuurent->data >= data){
+    while(cuurent->next != NULL){
+        if(cuurent->next->data >= data){
             struct ListNode* newNode = malloc(sizeof(struct ListNode));
             newNode->data = data;
             newNode->next = cuurent->next ;
@@ -52,10 +60,11 @@ struct ListNode *add_sorted_dec(struct ListNode *root, int data)
         root->prev = NULL;
         return root;
     }
+    
 
     struct ListNode *cuurent = root;
 
-    while(cuurent != NULL){
+    while(cuurent->next != NULL){
         if(cuurent->next->data <= data){
             struct ListNode* newNode = malloc(sizeof(struct ListNode));
             newNode->data = data;
