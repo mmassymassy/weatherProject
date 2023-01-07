@@ -94,6 +94,34 @@ void abr_getTreeAvg(struct ABRNoeu *root, int *sum, int *count)
     abr_getTreeAvg(root->droite, sum, count);
 }
 
+void abr_get_tree_max(struct ABRNoeu *root, int *max){
+    if(root == NULL){
+        return;
+    }
+
+    if(root->droite != NULL){
+        return abr_get_tree_max(root->droite, max);
+    }else{
+        (*max) = root->data;
+        return;
+    }
+    
+}
+
+void abr_get_tree_min(struct ABRNoeu *root, int *min){
+    if(root == NULL){
+        return;
+    }
+
+    if(root->gauche != NULL){
+        return abr_get_tree_min(root->gauche, min);
+    }else{
+        (*min) = root->data;
+        return;
+    }
+    
+}
+
 void print_abr_2d_util(struct ABRNoeu *root, int space)
 {
     int COUNT = 10;
