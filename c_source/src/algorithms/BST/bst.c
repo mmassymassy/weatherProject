@@ -56,14 +56,40 @@ void imprimer(struct Noeu *root)
     imprimer(root->gauche);
 }
 
-void appliquer_fonction_en_ordre(struct Noeu *root, void (*f)(int))
+void print_to_file_order_dec(struct Noeu *root, FILE *f)
 {
     if (root == NULL)
     {
         return;
     }
 
-    appliquer_fonction_en_ordre(root->droite, f);
-    (*f)(root->data);
-    appliquer_fonction_en_ordre(root->gauche, f);
+    print_to_file_order_dec(root->droite, f);
+    fprintf(f, "%d", root->data);
+    fprintf(f, ";");
+    print_to_file_order_dec(root->gauche, f);
+}
+
+void countElements(struct Noeu *root, int *counter)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    countElements(root->gauche, counter);
+    (*counter)++;
+    countElements(root->droite, counter);
+}
+
+void getTreeAvg(struct Noeu *root, int *sum, int *count)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    getTreeAvg(root->gauche, sum, count);
+    (*count)++;
+    (*sum) = (*sum) + root->data; 
+    getTreeAvg(root->droite, sum, count);
 }
