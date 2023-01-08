@@ -25,6 +25,11 @@ do
             ;;
         -f | --file)
             file="$2"
+            if(! test -f $file)
+            then
+                echo "Le fichier $file n'existe pas"
+                exit 1
+            fi
             shift 2
             ;;
         -d | --date)
@@ -43,12 +48,16 @@ do
             height="$2"
             shift 2
             ;;
-        -s | --station)0
+        -s | --station)
             station="$2"
             shift 2
             ;;
         -o | --output)
             output="$2"
+            if(! test -f $output)
+            then
+                output="output.txt"
+            fi
             shift 2
             ;;
         -F | --France)
