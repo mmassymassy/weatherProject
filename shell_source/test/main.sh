@@ -11,8 +11,9 @@
 # -c : column
 # -h : help
 
-SHORT=c:,d:,p:,w:,h:,s:,o:,help
-LONG=col:,date:,pression:,vent:,humidity:,station:,output:
+SHORT=c:,d:,p:,w:,h:,s:,o:,f:,F:,G:,S:,A:,O:,Q:,help
+#LONG=col:,date:,pression:,vent:,height:,station:,output:,file:,France:,Guyane:,SaintPierre:,Antilles:,Ocean,help
+LONG=col:,date:,pression:,vent:,height:,station:,output:,file:,help
 OPTS=$(getopt --options $SHORT --long $LONG --name "$0" -- "$@")
 eval set -- "$OPTS"
 while :
@@ -22,13 +23,17 @@ do
             col="$2"
             shift 2
             ;;
+        -f | --file)
+            file="$2"
+            shift 2
+            ;;
         -d | --date)
             date="$2"
             shift 2
             ;;
         -p | --pression)
             pression="$2"
-            shift 2
+            shift 2 
             ;;
         -w | --wind)
             vent="$2"
@@ -45,6 +50,65 @@ do
         -o | --output)
             output="$2"
             shift 2
+            ;;
+        -F | --France)
+            pays="France"
+            shift 2
+            ;;
+        -G | --Guyane)
+            pays="Guyane"
+            shift 2
+            ;;
+        -S | --SaintPierre)
+            pays="Saint-Pierre et Miquelon"
+            shift 2
+            ;;
+        -A | --Antilles)
+            pays="Antilles"
+            shift 2
+            ;;
+        -O | --Ocean)
+            pays="Océan indien"
+            shift 2
+            ;;
+        -Q | Antractique)
+            pays="Antarctique"
+            shift 2
+            ;;
+        --avl)
+            algo="avl"
+            shift 2
+            ;;
+        --abr)
+            algo="abr"
+            shift 2
+            ;;
+        --tab)
+            algo="tab"
+            shift 2
+            ;;
+        --help)
+            echo "Usage: $0 [options] [arguments]"
+            echo "Options:"
+            echo "-c, --col: column"
+            echo "-d, --date: date"
+            echo "-p, --pression: pression"
+            echo "-w, --wind: wind"
+            echo "-h, --height: height"
+            echo "-s, --station: station"
+            echo "-o, --output: output"
+            echo "-f, --file: file"
+            echo "-F, --France: France"
+            echo "-G, --Guyane: Guyane"
+            echo "-S, --SaintPierre: Saint-Pierre et Miquelon"
+            echo "-A, --Antilles: Antilles"
+            echo "-O, --Ocean: Océan indien"
+            echo "-Q, --Antarctique: Antarctique"
+            echo "--avl: trier avec l'algorithme avl"
+            echo "--abr: trier avec l'algorithme abr"
+            echo "--tab: trier en utilisant des tableaux ou listes chainées"
+            echo "--help: afficher ce message d'aide"
+            exit 0
             ;;
         --)
             shift
