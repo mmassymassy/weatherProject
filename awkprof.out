@@ -1,0 +1,20 @@
+BEGIN {
+	srt = "date -d" start " +%s"
+	srt | getline start
+	close(srt)
+	ed = "date -d" end " +%s"
+	ed | getline end
+	close(ed)
+}
+
+{
+	bkp = $0
+	epoch = "date -d" $2 " +%s"
+	epoch | getline $2
+	close(epoch)
+}
+
+($2 >= start && $2 <= end) {
+	print bkp
+}
+

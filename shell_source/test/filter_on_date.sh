@@ -1,0 +1,1 @@
+echo $min_date
